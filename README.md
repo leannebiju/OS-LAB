@@ -1,4 +1,4 @@
-#Shell Programming
+# Shell Programming
 
 This repository consists of shell programs done during the OS Lab in the sixth semester of BTech in Computer Science from CUSAT according to the 2019 Scheme syllabus.
 
