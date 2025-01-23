@@ -8,7 +8,9 @@ Detailed videos on how to do the same are available on YouTube.
 To create a file and run a program, first navigate to the working directory, then type the following commands:
 
 touch filename.sh
+
 chmod +x filename.sh
+
 ./filename.sh
 
 
@@ -22,12 +24,16 @@ Some programs may show carriage return errors since they are being typed in a wi
    After installing to run a program the steps will look like this:
    
    chmod +x filename.sh
+
    dos2unix filename.sh
+
    ./filename.sh
 
-2. Write a command to remove carriage return errors
+3. Write a command to remove carriage return errors
    In that case running a program will look something like this
 
    chmod +x filename.sh
+
    sed -i 's/\r//' filename.sh
+
    ./filename.sh
