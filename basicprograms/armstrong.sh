@@ -1,4 +1,6 @@
 #program to find if a number entered by the user is armstrong or not 
+#i.e. sum of cubes of a number = number 
+#eg. 153 = 1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153
 
 echo enter a number 
 read n
