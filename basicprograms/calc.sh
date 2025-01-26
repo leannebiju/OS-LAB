@@ -1,3 +1,5 @@
+#simple calculator program that performs addition, subtraction, multiplication and division according to user choice
+
 echo enter 2 numbers 
 read a b
 echo enter your choice 1.addition 2.subtraction 3.multiplication 4.division
