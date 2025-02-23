@@ -1,3 +1,5 @@
+//code to execute wait system call in LINUX using C
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>

@@ -1,3 +1,4 @@
+//program to copy the contents of one file to another 
 // ./a.out filename1 filename2 to run the code
 
 #include<fcntl.h>

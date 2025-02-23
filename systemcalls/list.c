@@ -1,4 +1,5 @@
-//shows path
+//code to execute execlp system call in LINUX using C
+//code to list the files in working directory
 
 #include <stdio.h>
 #include <stdlib.h>
