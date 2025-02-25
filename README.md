@@ -1,11 +1,13 @@
-# Shell Programming
+## OS LAB
 
-This repository consists of shell programs done during the OS Lab in the sixth semester of BTech in Computer Science from CUSAT according to the 2019 Scheme syllabus.
+This repository consists of programs done during the OS Lab in the sixth semester of BTech in Computer Science from CUSAT according to the 2019 Scheme syllabus.
 
 To run Linux commands on Windows, turn on WSL(Windows Subsystem for Linux) from Apps and Features and install Ubuntu app from the Microsoft store. 
 Detailed videos on how to do the same are available on YouTube. 
 
-To create a file and run a program, first navigate to the working directory, then type the following commands:
+# Shell Programs
+
+To create a file and run a shell program, first navigate to the working directory, then type the following commands:
 
 touch filename.sh
 
