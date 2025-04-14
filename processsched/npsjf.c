@@ -12,14 +12,23 @@ struct process{
 	int flag;
 };
 
+struct gantt{
+	int pid;
+	int start;
+	int end;
+};
+
 int main(){
 	
-	int n, complete = 0;
+	int n;
 	
 	printf("Enter the number of processes: \n");
 	scanf("%d", &n);
 	
 	struct process pro[n];
+	struct gantt gc[n+15];
+	int gi = 0;
+	
 	for(int i = 0; i<n; i++){
 		pro[i].pid = i+1;
 		pro[i].flag = 0;
@@ -30,7 +39,7 @@ int main(){
 		scanf("%d", &pro[i].bt);
 	}
 	
-	int currtime = 0;
+	int currtime = 0, complete = 0;
 	float awt, att, ttt = 0.0, twt = 0.0;
 	int mi, mb;
 	
@@ -48,9 +57,16 @@ int main(){
 		}
 	
 		if(mi==-1){
+			gc[gi].pid = -1;
+			gc[gi].start = currtime;
 			currtime++;
+			gc[gi].end = currtime;
+			gi++;
 		}
 		else{
+			gc[gi].pid = pro[mi].pid;
+			gc[gi].start = currtime;
+			
 			pro[mi].ct = currtime + pro[mi].bt;
 			pro[mi].tt = pro[mi].ct - pro[mi].at;
 			pro[mi].wt = pro[mi].tt - pro[mi].bt;
@@ -60,10 +76,35 @@ int main(){
 			complete++;
 			pro[mi].flag = 1;
 		
+			gc[gi].end = currtime;
+			gi++;
+		
 			ttt = ttt + pro[mi].tt;
 			twt = twt + pro[mi].wt;
 		}	
 	}
+	
+	printf("\n");
+	
+	//Gantt chart
+	
+	for(int i = 0; i<gi; i++){
+		printf("|");
+		if(gc[i].pid == -1)
+			printf(" idle ");
+		else 
+			printf(" P%d ", gc[i].pid);
+	}
+	printf("|\n");
+
+	printf("%d", gc[0].start);
+	for(int i = 0; i<gi; i++){
+		printf("   %d", gc[i].end);
+	}
+	printf("\n");
+	
+	
+	//Table
 	
 	printf("\nPID\t\tAT\t\tBT\t\tWT\t\tTT\t\tCT");
 	for(int i = 0; i<n; i++){
@@ -73,5 +114,5 @@ int main(){
 	awt = twt/n;
 	att = ttt/n;
 	printf("\nAverage Wait Time : %f", awt);
-	printf("\nAverage TurnAround Time : %f", att);
+	printf("\nAverage TurnAround Time : %f\n", att);
 }
