@@ -1,62 +1,64 @@
-//preemptive priority scheduling
+//preemptive pri scheduling
 
 #include<stdio.h>
 
-struct Process
-{
-    char name[5];
-    int at, bt, ct, tat, wt, priority, remaining_bt, completed;
+struct pro{
+    int pid;
+    int at;
+	int bt;
+	int ct;
+    int tt;
+	int wt;
+	int pri;
+	int rt;
+	int completed;
 };
 
-void preemptivePriority(struct Process p[], int n)
-{
-    int currentTime = 0, completed = 0, minPriority;
-    int ganttChart[100]; 
-    int ganttIndex = 0;   
-	float att = 0.0, awt = 0.0; float ttt =0.0, twt = 0.0;
+void preemptivePriority(struct pro p[], int n){
+	
+    int currentTime = 0, completed = 0, mp;
+    int gc[100]; 
+    int gi = 0;   
+	float att = 0.0, awt = 0.0; 
+	float ttt =0.0, twt = 0.0;
 
-    while (completed < n)
-    {
-        minPriority = -1;
-        for (int i = 0; i < n; i++)
-        {
-            if (p[i].at <= currentTime && p[i].remaining_bt > 0)
-            {
-                if (minPriority == -1 || p[i].priority < p[minPriority].priority)
-                    minPriority = i;
+    while (completed < n){
+		
+        mp = -1;
+        
+		for (int i = 0; i < n; i++){
+            if (p[i].at <= currentTime && p[i].rt > 0){
+                if (mp == -1 || p[i].pri < p[mp].pri)
+                    mp = i;
             }
         }
 
-        if (minPriority == -1)
-        {
+        if (mp == -1){
             currentTime++;
             continue;
         }
 
-       
-        if (ganttIndex == 0 || ganttChart[ganttIndex - 1] != minPriority) {
-            ganttChart[ganttIndex++] = minPriority;
+        if (gi == 0 || gc[gi - 1] != mp){
+            gc[gi++] = mp;
         }
         
-        p[minPriority].remaining_bt--;
+        p[mp].rt--;
         
-        if (p[minPriority].remaining_bt == 0)
-        {
-            p[minPriority].ct = currentTime + 1;
-            p[minPriority].tat = p[minPriority].ct - p[minPriority].at;
-            p[minPriority].wt = p[minPriority].tat - p[minPriority].bt;
-			twt = twt + p[minPriority].wt;
-			ttt = ttt + p[minPriority].tat;
+        if (p[mp].rt == 0){
+            p[mp].ct = currentTime + 1;
+            p[mp].tt = p[mp].ct - p[mp].at;
+            p[mp].wt = p[mp].tt - p[mp].bt;
+			twt = twt + p[mp].wt;
+			ttt = ttt + p[mp].tt;
             completed++;
         }
-
         currentTime++;
     }
 
     
     printf("\nGantt chart: ");
-    for (int i = 0; i < ganttIndex; i++)
-        printf("|%s", p[ganttChart[i]].name);
+    for (int i = 0; i < gi; i++)
+        printf("|P%d", p[gc[i]].pid);
     printf("|\n");
 	
 	att = ttt/n;
@@ -66,35 +68,36 @@ void preemptivePriority(struct Process p[], int n)
 	printf("\nAverage TurnAround Time : %f\n", att);
 }
 
-void display(struct Process p[], int n)
-{
-    printf("\nProcess\tAT\tBT\tCT\tTAT\tWT\n");
+void display(struct pro p[], int n){
+	
+    printf("\nProcess\tAT\tBT\tPri\tCT\tTAT\tWT\n");
     for (int i = 0; i < n; i++)
-        printf("%s\t%d\t%d\t%d\t%d\t%d\n", p[i].name, p[i].at, p[i].bt, p[i].ct, p[i].tat, p[i].wt);
+        printf("P%d\t%d\t%d\t%d\t%d\t%d\t%d\n", p[i].pid, p[i].at, p[i].bt, p[i].pri, p[i].ct, p[i].tt, p[i].wt);
 }
 
-int main()
-{
-    int n;
+int main(){
+
+	int n;
     printf("Enter number of processes: ");
     scanf("%d", &n);
-    struct Process p[n];
     
-    for (int i = 0; i < n; i++)
-    {
-        printf("Enter process name:\n");
-        scanf("%s", p[i].name);
-        printf("Enter arrival time, burst time, priority:\n");
+	struct pro p[n];
+    
+    for (int i = 0; i < n; i++){
+		p[i].pid = i+1;
+		printf("\nProcess %d", i+1);
+        printf("\nEnter arrival time :");
         scanf("%d", &p[i].at);
+		printf("Enter burst time :");
         scanf("%d", &p[i].bt);
-        scanf("%d", &p[i].priority);
-        p[i].remaining_bt = p[i].bt;
+		printf("Enter priority :");
+        scanf("%d", &p[i].pri);
+        p[i].rt = p[i].bt;
         p[i].completed = 0;
     }
 
     preemptivePriority(p, n);
     display(p, n);
-	
 
     return 0;
 }
