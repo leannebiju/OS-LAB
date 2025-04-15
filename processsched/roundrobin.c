@@ -30,7 +30,7 @@ int main() {
 		p[i].rt=p[i].bt;
 	}
 	
-	printf("Enter Quantum Duration: ");
+	printf("\nEnter Quantum Duration: ");
 	scanf("%d", &q);
 	
 	for(int i;i<n-1;i++){
