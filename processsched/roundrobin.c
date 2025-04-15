@@ -1,67 +1,74 @@
 #include<stdio.h>
-#include<stdbool.h>
 
 struct procs {
 	int pid;
-	int arrive;
-	int burst;
-	int complete;
-	int turnaround;
-	int wait;
-	int remain;
-	bool finish;
+	int at;
+	int bt;
+	int ct;
+	int tt;
+	int wt;
+	int rt;
+	int finish;
 };
 
 int main() {
+	
 	int n, q;
+	
 	printf("Enter no. of Processes: ");
 	scanf("%d", &n);
+	
 	struct procs p[n];
 	for(int i=0; i<n; i++) {
 		p[i].pid=i+1;
-		p[i].finish=false;
+		p[i].finish=0;
 		printf("\nFor Process %d:", i+1);
 		printf("\nArrival Time: ");
-		scanf("%d", &p[i].arrive);
+		scanf("%d", &p[i].at);
 		printf("Burst Time: ");
-		scanf("%d", &p[i].burst);
-		p[i].remain=p[i].burst;
+		scanf("%d", &p[i].bt);
+		p[i].rt=p[i].bt;
 	}
+	
 	printf("Enter Quantum Duration: ");
 	scanf("%d", &q);
+	
 	for(int i;i<n-1;i++){
 		for(int j=0;j<n-i-1;j++){
-			if(p[j].arrive>p[j+1].arrive){
+			if(p[j].at>p[j+1].at){
 				struct procs temp=p[j];
 				p[j]=p[j+1];
 				p[j+1]=temp;
 			}
 		}
 	}
-	int curtime=0,complete=0;
+	
+	int curtime=0,ct=0;
 	int min=-1;
 	int remproc=n;
+	
 	float twt=0.0, ttt=0.0; float awt=0.0, att=0.0;
+	
 	printf("\nGantt Chart:\n |");
 	while(remproc>0){
-		bool found=false;
+		int found=0;
 		for(int i=0;i<n;i++){
-			if(p[i].remain>0 && p[i].arrive<=curtime){
-				found=true;
-				int exetime=(p[i].remain<q)?p[i].remain:q;
-				p[i].remain-=exetime;
+			if(p[i].rt>0 && p[i].at<=curtime){
+				found=1;
+				int exetime=(p[i].rt<q)?p[i].rt:q;
+				p[i].rt-=exetime;
 				curtime+=exetime;
 				if(p[i].pid!=min){
 					printf("%d |",p[i].pid);
 					min=p[i].pid;
 				}
-				if(p[i].remain==0){
-					p[i].complete=curtime;
-					p[i].turnaround=p[i].complete-p[i].arrive;
-					p[i].wait=p[i].turnaround-p[i].burst;
-					twt = twt+p[i].wait;
-					ttt = ttt+p[i].turnaround;
-					p[i].finish=true;
+				if(p[i].rt==0){
+					p[i].ct=curtime;
+					p[i].tt=p[i].ct-p[i].at;
+					p[i].wt=p[i].tt-p[i].bt;
+					twt = twt+p[i].wt;
+					ttt = ttt+p[i].tt;
+					p[i].finish=1;
 					remproc--;
 				}
 			}
@@ -73,7 +80,7 @@ int main() {
 	printf("\n");
 	printf("\nProcess\tArrival\tWaiting\tBurst\tTurnaround\tCompletion");
 	for(int i=0; i<n; i++) {
-		printf("\n%d\t%d\t%d\t%d\t%d\t\t%d", p[i].pid, p[i].arrive, p[i].wait, p[i].burst, p[i].turnaround, p[i].complete);
+		printf("\n%d\t%d\t%d\t%d\t%d\t\t%d", p[i].pid, p[i].at, p[i].wt, p[i].bt, p[i].tt, p[i].ct);
 	}
 	printf("\n");
 	
