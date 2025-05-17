@@ -39,3 +39,14 @@ Some programs may show carriage return errors since they are being typed in a wi
    sed -i 's/\r//' filename.sh
 
    ./filename.sh
+
+
+   ## System Call and Process Scheduling
+
+   System Call and Process Scheduling programs can be run like the normal C programs
+
+   to compile:
+   gcc filename.c
+
+   to run:
+   ./a.out
