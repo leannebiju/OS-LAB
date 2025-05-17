@@ -46,7 +46,9 @@ Some programs may show carriage return errors since they are being typed in a wi
 System Call and Process Scheduling programs can be run like the normal C programs
 
 to compile:
+
 gcc filename.c
 
 to run:
+
 ./a.out
